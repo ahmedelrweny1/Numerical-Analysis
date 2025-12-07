@@ -1,1436 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ملخص التحليل العددي - Numerical Analysis Summary</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
-            color: #e0e0e0;
-            line-height: 1.8;
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            text-align: center;
-            color: #64ffda;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #a0a0a0;
-            margin-bottom: 40px;
-            font-size: 1.1em;
-        }
-
-        .section {
-            margin-bottom: 50px;
-        }
-
-        .section-title {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px 30px;
-            border-radius: 15px;
-            font-size: 1.8em;
-            margin-bottom: 30px;
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .methods-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .method-card {
-            background: #2a2a3e;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid #3a3a4e;
-        }
-
-        .method-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(100, 255, 218, 0.2);
-        }
-
-        .method-title {
-            color: #64ffda;
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #64ffda;
-        }
-
-        .method-section {
-            margin-bottom: 20px;
-        }
-
-        .method-section h3 {
-            color: #ffd700;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-
-        .method-section p, .method-section li {
-            color: #d0d0d0;
-            margin-bottom: 8px;
-        }
-
-        .method-section ul {
-            margin-right: 20px;
-            margin-top: 10px;
-        }
-
-        .method-section li {
-            margin-bottom: 8px;
-        }
-
-        .formula-box {
-            background: #1a1a2e;
-            border: 2px solid #64ffda;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 15px 0;
-            text-align: center;
-            font-family: 'Courier New', monospace;
-            color: #64ffda;
-            font-size: 1.15em;
-            direction: ltr;
-            box-shadow: 0 4px 10px rgba(100, 255, 218, 0.1);
-            line-height: 1.8;
-        }
-
-        .formula-box strong {
-            color: #64ffda;
-            display: block;
-            margin-bottom: 10px;
-            font-size: 1.05em;
-        }
-
-        .formula-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .formula-card {
-            background: #1a1a2e;
-            border: 2px solid #64ffda;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            font-family: 'Courier New', monospace;
-            color: #64ffda;
-            font-size: 1.1em;
-            direction: ltr;
-            box-shadow: 0 4px 10px rgba(100, 255, 218, 0.1);
-            line-height: 1.8;
-        }
-
-        .formula-card-title {
-            color: #64ffda;
-            font-weight: bold;
-            margin-bottom: 12px;
-            font-size: 1.1em;
-            display: block;
-        }
-
-        .example-box {
-            background: #1e3a5f;
-            border: 2px solid #4a9eff;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 15px;
-        }
-
-        .example-box h4 {
-            color: #4a9eff;
-            margin-bottom: 15px;
-            font-size: 1.2em;
-        }
-
-        .example-step {
-            background: #2a4a6f;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border-right: 4px solid #4a9eff;
-        }
-
-        .example-step strong {
-            color: #ffd700;
-        }
-
-        code {
-            background: #1a1a2e;
-            padding: 2px 6px;
-            border-radius: 4px;
-            color: #64ffda;
-            font-family: 'Courier New', monospace;
-            direction: ltr;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-            background: #1a1a2e;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        table th, table td {
-            padding: 12px;
-            text-align: center;
-            border: 1px solid #3a3a4e;
-        }
-
-        table th {
-            background: #667eea;
-            color: white;
-        }
-
-        table td {
-            color: #e0e0e0;
-        }
-
-        @media (max-width: 768px) {
-            .methods-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            h1 {
-                font-size: 2em;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>📚 ملخص التحليل العددي</h1>
-        <p class="subtitle">Numerical Analysis Course Summary</p>
-
-        <!-- Section 1: Errors -->
-        <div class="section">
-            <div class="section-title">1️⃣ الأخطاء (Errors)</div>
-            
-            <div class="methods-grid">
-                <!-- Rounding Error -->
-                <div class="method-card">
-                    <div class="method-title">خطأ التقريب (Rounding Error)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 التعريف:</h3>
-                        <p>خطأ التقريب هو الخطأ اللي بيحصل لما بنقرب رقم عشان نخليه أقرب لعدد معين من الأرقام المعنوية. بيحصل لما بنستخدم أرقام محدودة في الحسابات بدل الأرقام الدقيقة.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>حدد عدد الأرقام المعنوية المطلوبة</li>
-                            <li>شوف الرقم اللي بعد الرقم المطلوب</li>
-                            <li>لو الرقم أكبر من أو يساوي 5، زود الرقم اللي قبله بواحد</li>
-                            <li>لو الرقم أقل من 5، اترك الرقم كما هو</li>
-                            <li>احسب الفرق بين الرقم الأصلي والرقم المقرب</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: قرب الرقم 3.14159 لـ 3 أرقام معنوية</h4>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                الرقم الأصلي: 3.14159<br>
-                                الرقم اللي بعد الرقم الثالث (1) هو 4<br>
-                                لأن 4 أقل من 5، الرقم يبقى 3.14<br>
-                                <strong>الخطأ = |3.14159 - 3.14| = 0.00159</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Truncation Error -->
-                <div class="method-card">
-                    <div class="method-title">خطأ القطع (Truncation Error)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 التعريف:</h3>
-                        <p>خطأ القطع هو الخطأ اللي بيحصل لما بنقطع سلسلة لا نهائية (زي متسلسلة تايلور) ونستخدم جزء منها بس. الخطأ ده بيحصل بسبب إننا بنستخدم طريقة تقريبية بدل الحل الدقيق.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>حدد السلسلة اللا نهائية المستخدمة</li>
-                            <li>حدد عدد الحدود المستخدمة</li>
-                            <li>احسب القيمة الدقيقة (لو متاحة)</li>
-                            <li>احسب القيمة المقربة</li>
-                            <li>احسب الفرق بين القيمتين</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: استخدم أول حدين من متسلسلة تايلور لـ e^x عند x=0.1</h4>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                e^x ≈ 1 + x (استخدام حدين فقط)<br>
-                                e^0.1 ≈ 1 + 0.1 = 1.1<br>
-                                القيمة الدقيقة: e^0.1 ≈ 1.10517<br>
-                                <strong>الخطأ = |1.10517 - 1.1| = 0.00517</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Absolute & Relative Error -->
-                <div class="method-card">
-                    <div class="method-title">الخطأ المطلق والخطأ النسبي (Absolute & Relative Error)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 التعريف:</h3>
-                        <p><strong>الخطأ المطلق:</strong> هو الفرق المطلق بين القيمة الحقيقية والقيمة المقربة.<br>
-                        <strong>الخطأ النسبي:</strong> هو نسبة الخطأ المطلق للقيمة الحقيقية، وبيعبر عنه كنسبة مئوية.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القوانين:</h3>
-                        <div class="formula-card">
-                            E<sub>a</sub> = |x<sub>true</sub> - x<sub>approx</sub>|
-                        </div>
-                        <div class="formula-card">
-                            E<sub>r</sub> = |x<sub>true</sub> - x<sub>approx</sub>| / |x<sub>true</sub>| × 100%
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: القيمة الحقيقية = 10.5، القيمة المقربة = 10.2</h4>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                <strong>الخطأ المطلق:</strong><br>
-                                E<sub>a</sub> = |10.5 - 10.2| = 0.3<br><br>
-                                <strong>الخطأ النسبي:</strong><br>
-                                E<sub>r</sub> = 0.3 / 10.5 × 100% = 2.86%
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section 2: Non-Linear Equations -->
-        <div class="section">
-            <div class="section-title">2️⃣ المعادلات غير الخطية (Non-Linear Equations)</div>
-            
-            <div class="methods-grid">
-                <!-- Bisection Method -->
-                <div class="method-card">
-                    <div class="method-title">طريقة التنصيف (Bisection Method)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>طريقة التنصيف هي طريقة بسيطة لإيجاد جذر معادلة. الفكرة إننا بنبدأ بفترة [a, b] بحيث f(a) و f(b) عندهم إشارات مختلفة، وبعدين بنقسم الفترة في المنتصف ونشوف في أي جزء الجذر موجود.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>تأكد إن f(a) × f(b) < 0 (إشارات مختلفة)</li>
-                            <li>احسب c = (a + b) / 2</li>
-                            <li>احسب f(c)</li>
-                            <li>لو f(c) = 0، يبقى c هو الجذر</li>
-                            <li>لو f(a) × f(c) < 0، يبقى الجذر في [a, c]، خلي b = c</li>
-                            <li>لو f(c) × f(b) < 0، يبقى الجذر في [c, b]، خلي a = c</li>
-                            <li>كرر الخطوات لحد ما |b - a| < tolerance</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            c = (a + b) / 2
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: أوجد جذر f(x) = x² - 4 في الفترة [1, 3]</h4>
-                            <div class="example-step">
-                                <strong>التكرار الأول:</strong><br>
-                                a = 1, b = 3<br>
-                                c = (1 + 3) / 2 = 2<br>
-                                f(1) = -3, f(2) = 0, f(3) = 5<br>
-                                f(1) × f(2) = 0، يبقى <strong>الجذر = 2</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Fixed Point Iteration -->
-                <div class="method-card">
-                    <div class="method-title">طريقة التكرار النقطي (Fixed Point Iteration)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>طريقة التكرار النقطي بتستخدم تحويل المعادلة f(x) = 0 لشكل x = g(x). بعدين بنبدأ بقيمة ابتدائية x₀ ونحسب x₁ = g(x₀)، ونكمل لحد ما القيمة تستقر.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>حول المعادلة f(x) = 0 لشكل x = g(x)</li>
-                            <li>اختر قيمة ابتدائية x₀</li>
-                            <li>احسب x₁ = g(x₀)</li>
-                            <li>احسب x₂ = g(x₁)</li>
-                            <li>استمر في التكرار: x<sub>n+1</sub> = g(x<sub>n</sub>)</li>
-                            <li>توقف لما |x<sub>n+1</sub> - x<sub>n</sub>| < tolerance</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            x<sub>n+1</sub> = g(x<sub>n</sub>)
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: أوجد جذر x² - 4 = 0 باستخدام x = 4/x</h4>
-                            <div class="example-step">
-                                <strong>التكرارات:</strong><br>
-                                x₀ = 3<br>
-                                x₁ = 4/3 = 1.333<br>
-                                x₂ = 4/1.333 = 3.000<br>
-                                x₃ = 4/3 = 1.333<br>
-                                (ملاحظة: هذا المثال يحتاج تحويل أفضل للتقارب)
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Newton-Raphson -->
-                <div class="method-card">
-                    <div class="method-title">طريقة نيوتن-رافسون (Newton-Raphson Method)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>طريقة نيوتن-رافسون طريقة سريعة جداً لإيجاد الجذور. بتستخدم المشتقة الأولى للدالة عشان تحسن التقدير في كل تكرار. بتتقارب بسرعة كبيرة لو القيمة الابتدائية قريبة من الجذر.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>احسب المشتقة الأولى f'(x)</li>
-                            <li>اختر قيمة ابتدائية x₀</li>
-                            <li>احسب x₁ = x₀ - f(x₀) / f'(x₀)</li>
-                            <li>احسب x₂ = x₁ - f(x₁) / f'(x₁)</li>
-                            <li>استمر: x<sub>n+1</sub> = x<sub>n</sub> - f(x<sub>n</sub>) / f'(x<sub>n</sub>)</li>
-                            <li>توقف لما |x<sub>n+1</sub> - x<sub>n</sub>| < tolerance</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            x<sub>n+1</sub> = x<sub>n</sub> - f(x<sub>n</sub>) / f'(x<sub>n</sub>)
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: أوجد جذر f(x) = x² - 4، x₀ = 3</h4>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                f'(x) = 2x<br>
-                                <strong>التكرار الأول:</strong><br>
-                                x₁ = 3 - (9-4)/(2×3) = 3 - 5/6 = 2.167<br>
-                                <strong>التكرار الثاني:</strong><br>
-                                x₂ = 2.167 - (4.7-4)/(2×2.167) = 2.167 - 0.162 = 2.005<br>
-                                <strong>التكرار الثالث:</strong><br>
-                                x₃ = 2.005 - (4.02-4)/(2×2.005) ≈ 2.000
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section 3: Linear Systems -->
-        <div class="section">
-            <div class="section-title">3️⃣ الأنظمة الخطية (Linear Systems)</div>
-            
-            <div class="methods-grid">
-                <!-- Gauss Elimination -->
-                <div class="method-card">
-                    <div class="method-title">حذف جاوس (Gauss Elimination)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>حذف جاوس طريقة لحل أنظمة المعادلات الخطية. الفكرة إننا بنحول المصفوفة لشكل مثلث علوي (upper triangular) باستخدام عمليات الصفوف، وبعدين بنحل من الأسفل لفوق (back substitution).</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>اكتب المصفوفة الممتدة [A|b]</li>
-                            <li>استخدم عمليات الصفوف عشان تحول المصفوفة لشكل مثلث علوي</li>
-                            <li>ابدأ من العمود الأول: خلي العنصر الرئيسي = 1</li>
-                            <li>استخدم الصف الأول عشان تحذف العناصر تحت العنصر الرئيسي</li>
-                            <li>كرر للعمود التاني والثالث وهكذا</li>
-                            <li>استخدم التعويض العكسي (back substitution) عشان تحل</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: حل النظام<br>
-                            2x + y = 5<br>
-                            x - y = 1</h4>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                المصفوفة الممتدة:<br>
-                                [2  1 | 5]<br>
-                                [1 -1 | 1]<br><br>
-                                R₁ ← R₁/2:<br>
-                                [1  0.5 | 2.5]<br>
-                                [1  -1  |  1 ]<br><br>
-                                R₂ ← R₂ - R₁:<br>
-                                [1  0.5 | 2.5]<br>
-                                [0 -1.5 | -1.5]<br><br>
-                                R₂ ← R₂/(-1.5):<br>
-                                [1  0.5 | 2.5]<br>
-                                [0   1  |  1 ]<br><br>
-                                من R₂: y = 1<br>
-                                من R₁: x + 0.5(1) = 2.5 → x = 2<br>
-                                <strong>الحل: x = 2, y = 1</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Gauss-Jordan -->
-                <div class="method-card">
-                    <div class="method-title">جاوس-جوردان (Gauss-Jordan)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>جاوس-جوردان مشابه لحذف جاوس، لكن بنحول المصفوفة لشكل المصفوفة المحايدة (identity matrix) بدل المثلث العلوي. يعني بنحذف العناصر فوق وتحت العنصر الرئيسي، وبكده الحل هيظهر مباشرة.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>اكتب المصفوفة الممتدة [A|b]</li>
-                            <li>حول المصفوفة لشكل المصفوفة المحايدة</li>
-                            <li>لكل عمود: خلي العنصر الرئيسي = 1</li>
-                            <li>احذف كل العناصر فوق وتحت العنصر الرئيسي</li>
-                            <li>الحل هيظهر مباشرة في العمود الأخير</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: حل النظام<br>
-                            2x + y = 5<br>
-                            x - y = 1</h4>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                [2  1 | 5]<br>
-                                [1 -1 | 1]<br><br>
-                                R₁ ← R₁/2:<br>
-                                [1  0.5 | 2.5]<br>
-                                [1  -1  |  1 ]<br><br>
-                                R₂ ← R₂ - R₁:<br>
-                                [1  0.5 | 2.5]<br>
-                                [0 -1.5 | -1.5]<br><br>
-                                R₂ ← R₂/(-1.5):<br>
-                                [1  0.5 | 2.5]<br>
-                                [0   1  |  1 ]<br><br>
-                                R₁ ← R₁ - 0.5×R₂:<br>
-                                [1  0 | 2]<br>
-                                [0  1 | 1]<br><br>
-                                <strong>الحل: x = 2, y = 1</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- LU Decomposition -->
-                <div class="method-card">
-                    <div class="method-title">تحليل LU (LU Decomposition)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>تحليل LU بيحلل المصفوفة A لضرب مصفوفتين: L (مثلث سفلي) و U (مثلث علوي). بعدين بنحل النظام Ax = b عن طريق حل Ly = b أولاً، وبعدين Ux = y.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>حلل A = L × U</li>
-                            <li>L: مصفوفة مثلث سفلي (العناصر القطرية = 1)</li>
-                            <li>U: مصفوفة مثلث علوي</li>
-                            <li>حل Ly = b (forward substitution)</li>
-                            <li>حل Ux = y (back substitution)</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            A = L × U<br>
-                            Ax = b → (LU)x = b → L(Ux) = b<br>
-                            حل: Ly = b، ثم Ux = y
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: حل النظام باستخدام LU<br>
-                            2x + y = 5<br>
-                            x - y = 1</h4>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                A = [2  1] = [1  0] [2   1 ]<br>
-                                    [1 -1]   [0.5 1] [0 -1.5]<br>
-                                L = [1  0], U = [2   1 ]<br>
-                                    [0.5 1]     [0 -1.5]<br><br>
-                                حل Ly = [5]: y₁ = 5, y₂ = 1 - 0.5×5 = -1.5<br>
-                                        [1]<br><br>
-                                حل Ux = [-1.5]: x₂ = 1, x₁ = 2<br>
-                                <strong>الحل: x = 2, y = 1</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Jacobi Method -->
-                <div class="method-card">
-                    <div class="method-title">طريقة جاكوبي (Jacobi Method)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>طريقة جاكوبي طريقة تكرارية لحل الأنظمة الخطية. بنحول النظام لشكل x = D⁻¹(b - (L+U)x)، وبعدين بنستخدم القيم القديمة عشان نحسب القيم الجديدة في كل تكرار.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>حول النظام لشكل x = D⁻¹(b - (L+U)x)</li>
-                            <li>اختر قيم ابتدائية x⁽⁰⁾</li>
-                            <li>احسب x⁽¹⁾ باستخدام x⁽⁰⁾</li>
-                            <li>احسب x⁽²⁾ باستخدام x⁽¹⁾</li>
-                            <li>استمر لحد ما |x⁽ⁿ⁺¹⁾ - x⁽ⁿ⁾| < tolerance</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            x<sub>i</sub><sup>(k+1)</sup> = (b<sub>i</sub> - Σ<sub>j≠i</sub> a<sub>ij</sub>x<sub>j</sub><sup>(k)</sup>) / a<sub>ii</sub>
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: حل النظام<br>
-                            4x + y = 7<br>
-                            x + 3y = 5<br>
-                            x⁽⁰⁾ = [0, 0]</h4>
-                            <div class="example-step">
-                                <strong>التكرار الأول:</strong><br>
-                                x₁⁽¹⁾ = (7 - 1×0)/4 = 1.75<br>
-                                x₂⁽¹⁾ = (5 - 1×0)/3 = 1.667<br>
-                                <strong>التكرار الثاني:</strong><br>
-                                x₁⁽²⁾ = (7 - 1×1.667)/4 = 1.333<br>
-                                x₂⁽²⁾ = (5 - 1×1.75)/3 = 1.083<br>
-                                (يستمر التكرار للتقارب)
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Gauss-Seidel -->
-                <div class="method-card">
-                    <div class="method-title">جاوس-سيدل (Gauss-Seidel Method)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>جاوس-سيدل مشابهة لجاكوبي، لكن الفرق إننا بنستخدم القيم الجديدة اللي حسبناها فوراً بدل الانتظار لنهاية التكرار. ده بيخليها أسرع في التقارب من جاكوبي.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>حول النظام لشكل x = D⁻¹(b - Lx - Ux)</li>
-                            <li>اختر قيم ابتدائية x⁽⁰⁾</li>
-                            <li>احسب x₁⁽¹⁾ باستخدام x⁽⁰⁾</li>
-                            <li>احسب x₂⁽¹⁾ باستخدام x₁⁽¹⁾ و x⁽⁰⁾</li>
-                            <li>استخدم القيم الجديدة فوراً في الحسابات التالية</li>
-                            <li>استمر لحد التقارب</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            x<sub>i</sub><sup>(k+1)</sup> = (b<sub>i</sub> - Σ<sub>j&lt;i</sub> a<sub>ij</sub>x<sub>j</sub><sup>(k+1)</sup> - Σ<sub>j&gt;i</sub> a<sub>ij</sub>x<sub>j</sub><sup>(k)</sup>) / a<sub>ii</sub>
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: حل النظام<br>
-                            4x + y = 7<br>
-                            x + 3y = 5<br>
-                            x⁽⁰⁾ = [0, 0]</h4>
-                            <div class="example-step">
-                                <strong>التكرار الأول:</strong><br>
-                                x₁⁽¹⁾ = (7 - 1×0)/4 = 1.75<br>
-                                x₂⁽¹⁾ = (5 - 1×1.75)/3 = 1.083<br>
-                                <strong>التكرار الثاني:</strong><br>
-                                x₁⁽²⁾ = (7 - 1×1.083)/4 = 1.479<br>
-                                x₂⁽²⁾ = (5 - 1×1.479)/3 = 1.174<br>
-                                (أسرع تقارب من جاكوبي)
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section 4: Numerical Differentiation -->
-        <div class="section">
-            <div class="section-title">4️⃣ الاشتقاق العددي (Numerical Differentiation)</div>
-            
-            <!-- Introduction to Finite Differences -->
-            <div class="method-card" style="margin-bottom: 30px;">
-                <div class="method-title">مشغلات الفروقات المحدودة (Finite Difference Operators)</div>
-                
-                <div class="method-section">
-                    <h3>📖 التعريف:</h3>
-                    <p>مشغلات الفروقات المحدودة بتستخدم لحل مشاكل الاستيفاء والاشتقاق العددي لما المسافة بين النقاط في قاعدة البيانات متساوية. في 3 أنواع رئيسية:</p>
-                </div>
-
-                <div class="method-section">
-                    <h3>📐 القوانين الأساسية (الرتبة الأولى):</h3>
-                    <div class="formula-grid">
-                        <div class="formula-card">
-                            <span class="formula-card-title">① Forward Difference (Δ):</span>
-                            Δf(xᵢ) = f(xᵢ₊₁) - f(xᵢ)<br>
-                            = f(xᵢ + h) - f(xᵢ)<br>
-                            = Yᵢ₊₁ - Yᵢ
-                        </div>
-                        <div class="formula-card">
-                            <span class="formula-card-title">② Backward Difference (∇):</span>
-                            ∇f(xᵢ) = f(xᵢ) - f(xᵢ₋₁)<br>
-                            = f(xᵢ) - f(xᵢ - h)<br>
-                            = Yᵢ - Yᵢ₋₁
-                        </div>
-                        <div class="formula-card">
-                            <span class="formula-card-title">③ Central Difference (δ):</span>
-                            δf(xᵢ) = f(xᵢ₊₁/₂) - f(xᵢ₋₁/₂)<br>
-                            = f(xᵢ + h/2) - f(xᵢ - h/2)<br>
-                            = Yᵢ₊₁/₂ - Yᵢ₋₁/₂
-                        </div>
-                    </div>
-                </div>
-
-                <div class="method-section">
-                    <h3>📐 القوانين من الرتبة الثانية:</h3>
-                    <div class="formula-grid">
-                        <div class="formula-card">
-                            <span class="formula-card-title">① Forward (Δ²):</span>
-                            Δ²f(xᵢ) = f(xᵢ₊₂) - 2f(xᵢ₊₁) + f(xᵢ)
-                        </div>
-                        <div class="formula-card">
-                            <span class="formula-card-title">② Backward (∇²):</span>
-                            ∇²f(xᵢ) = f(xᵢ) - 2f(xᵢ₋₁) + f(xᵢ₋₂)
-                        </div>
-                        <div class="formula-card">
-                            <span class="formula-card-title">③ Central (δ²):</span>
-                            δ²f(xᵢ) = f(xᵢ₊₁) - 2f(xᵢ) + f(xᵢ₋₁)
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="methods-grid">
-                <!-- Forward Difference -->
-                <div class="method-card">
-                    <div class="method-title">الفرق الأمامي (Forward Difference)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>الفرق الأمامي طريقة تقريبية لحساب المشتقة الأولى. بنستخدم القيمة الحالية والقيمة اللي بعدها (x + h) عشان نقدر المشتقة. طريقة بسيطة وسهلة لكن دقتها أقل من الطرق التانية.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            f'(x) ≈ [f(x + h) - f(x)] / h
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: احسب f'(2) لـ f(x) = x² باستخدام h = 0.1</h4>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                f(2) = 4<br>
-                                f(2.1) = 4.41<br>
-                                f'(2) ≈ [f(2.1) - f(2)] / 0.1<br>
-                                f'(2) ≈ (4.41 - 4) / 0.1 = 4.1<br>
-                                القيمة الدقيقة: f'(2) = 4<br>
-                                <strong>الخطأ = 0.1</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Backward Difference -->
-                <div class="method-card">
-                    <div class="method-title">الفرق الخلفي (Backward Difference)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>الفرق الخلفي مشابه للفرق الأمامي، لكن بنستخدم القيمة الحالية والقيمة اللي قبلها (x - h). مفيد لما عندنا بيانات من الماضي بس، أو لما بنحتاج نحسب المشتقة عند نقطة معينة.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            f'(x) ≈ [f(x) - f(x - h)] / h
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: احسب f'(2) لـ f(x) = x² باستخدام h = 0.1</h4>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                f(2) = 4<br>
-                                f(1.9) = 3.61<br>
-                                f'(2) ≈ [f(2) - f(1.9)] / 0.1<br>
-                                f'(2) ≈ (4 - 3.61) / 0.1 = 3.9<br>
-                                القيمة الدقيقة: f'(2) = 4<br>
-                                <strong>الخطأ = 0.1</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Central Difference -->
-                <div class="method-card">
-                    <div class="method-title">الفرق المركزي (Central Difference)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>الفرق المركزي أفضل طريقة من التلاتة. بنستخدم القيمة اللي قبل والقيمة اللي بعد النقطة (x - h و x + h). دقته أعلى من الفرق الأمامي والخلفي، وبيستخدم في معظم التطبيقات العملية.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            f'(x) ≈ [f(x + h) - f(x - h)] / (2h)
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: احسب f'(2) لـ f(x) = x² باستخدام h = 0.1</h4>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                f(1.9) = 3.61<br>
-                                f(2.1) = 4.41<br>
-                                f'(2) ≈ [f(2.1) - f(1.9)] / (2×0.1)<br>
-                                f'(2) ≈ (4.41 - 3.61) / 0.2 = 4.0<br>
-                                القيمة الدقيقة: f'(2) = 4<br>
-                                <strong>الخطأ = 0 (دقة عالية!)</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Newton Forward Difference Formula -->
-                <div class="method-card">
-                    <div class="method-title">صيغة نيوتن للأمام (Newton Forward Difference Formula)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>صيغة نيوتن للأمام طريقة دقيقة لحساب المشتقة باستخدام الفروقات الأمامية. بتستخدم متعدد الحدود الاستيفائي لنيوتن عشان تحسب المشتقة عند نقطة معينة. مفيدة لما عندنا جدول بيانات بفواصل متساوية.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>احسب الفروقات الأمامية: Δf₀, Δ²f₀, Δ³f₀, ...</li>
-                            <li>استخدم الصيغة: f'(x₀) = (1/h) × [Δf₀ - Δ²f₀/2 + Δ³f₀/3 - ...]</li>
-                            <li>للمشتقة الثانية: f''(x₀) = (1/h²) × [Δ²f₀ - Δ³f₀ + 11Δ⁴f₀/12 - ...]</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            f'(x₀) = (1/h) × [Δf₀ - (1/2)Δ²f₀ + (1/3)Δ³f₀ - (1/4)Δ⁴f₀ + ...]
-                        </div>
-                        <div class="formula-card">
-                            f''(x₀) = (1/h²) × [Δ²f₀ - Δ³f₀ + (11/12)Δ⁴f₀ - ...]
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: احسب f'(1) من الجدول التالي (h = 0.5)</h4>
-                            <table>
-                                <tr>
-                                    <th>x</th>
-                                    <th>f(x)</th>
-                                    <th>Δf</th>
-                                    <th>Δ²f</th>
-                                </tr>
-                                <tr>
-                                    <td>1.0</td>
-                                    <td>1.0</td>
-                                    <td>1.25</td>
-                                    <td>0.5</td>
-                                </tr>
-                                <tr>
-                                    <td>1.5</td>
-                                    <td>2.25</td>
-                                    <td>1.75</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td>2.0</td>
-                                    <td>4.0</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                </tr>
-                            </table>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                h = 0.5<br>
-                                Δf₀ = 1.25<br>
-                                Δ²f₀ = 0.5<br>
-                                f'(1) = (1/0.5) × [1.25 - (1/2)×0.5]<br>
-                                f'(1) = 2 × [1.25 - 0.25] = 2 × 1.0 = 2.0<br>
-                                القيمة الدقيقة لـ f(x) = x²: f'(1) = 2<br>
-                                <strong>النتيجة صحيحة!</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Newton Forward Differentiation Method -->
-                <div class="method-card">
-                    <div class="method-title">نيوتن للأمام للاشتقاق (Newton Forward Differentiation)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>استخدم صيغة نيوتن للأمام للاشتقاق لما النقطة xₚ قريبة من بداية قاعدة البيانات. بنشتق صيغة الاستيفاء لنيوتن للأمام عشان نحصل على المشتقة.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>احسب p = (xₚ - x₀) / h</li>
-                            <li>كون جدول الفروقات الأمامية</li>
-                            <li>استخدم القانون: f'(xₚ) = (1/h) × [Δf(x₀) + ((2p-1)/2!) × Δ²f(x₀) + ...]</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            f'(xₚ) = (1/h) × [Δf(x₀) + ((2p-1)/2!) × Δ²f(x₀) + ...]<br>
-                            حيث p = (xₚ - x₀) / h
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: من الجدول التالي، احسب f'(4.5)</h4>
-                            <table>
-                                <tr>
-                                    <th>x</th>
-                                    <th>f(x)</th>
-                                    <th>Δf</th>
-                                    <th>Δ²f</th>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>1</td>
-                                    <td>2</td>
-                                    <td>3</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>3</td>
-                                    <td>5</td>
-                                    <td>7</td>
-                                </tr>
-                                <tr>
-                                    <td>8</td>
-                                    <td>8</td>
-                                    <td>12</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>20</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                </tr>
-                            </table>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                xₚ = 4.5 قريبة من البداية → نستخدم Forward<br>
-                                h = 2, x₀ = 4<br>
-                                p = (4.5 - 4) / 2 = 0.25<br>
-                                Δf(x₀) = 2, Δ²f(x₀) = 3<br>
-                                f'(4.5) = (1/2) × [2 + ((2×0.25-1)/(2×1)) × 3]<br>
-                                f'(4.5) = 0.5 × [2 + (-0.5/2) × 3] = 0.5 × [2 - 0.75] = 0.625<br>
-                                <strong>النتيجة: f'(4.5) = 0.625</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Newton Backward Differentiation Method -->
-                <div class="method-card">
-                    <div class="method-title">نيوتن للخلف للاشتقاق (Newton Backward Differentiation)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>استخدم صيغة نيوتن للخلف للاشتقاق لما النقطة xₚ قريبة من نهاية قاعدة البيانات. بنشتق صيغة الاستيفاء لنيوتن للخلف.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>احسب p = (xₚ - xₙ) / h</li>
-                            <li>كون جدول الفروقات الخلفية</li>
-                            <li>استخدم القانون: f'(xₚ) = (1/h) × [∇f(xₙ) + ((2p+1)/2!) × ∇²f(xₙ) + ...]</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            f'(xₚ) = (1/h) × [∇f(xₙ) + ((2p+1)/2!) × ∇²f(xₙ) + ...]<br>
-                            حيث p = (xₚ - xₙ) / h
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: من نفس الجدول، احسب f'(9)</h4>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                xₚ = 9 قريبة من النهاية → نستخدم Backward<br>
-                                h = 2, xₙ = 10<br>
-                                p = (9 - 10) / 2 = -0.5<br>
-                                ∇f(xₙ) = 12, ∇²f(xₙ) = 7<br>
-                                f'(9) = (1/2) × [12 + ((2×(-0.5)+1)/(2×1)) × 7]<br>
-                                f'(9) = 0.5 × [12 + (0/2) × 7] = 0.5 × 12 = 6<br>
-                                <strong>النتيجة: f'(9) = 6</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Newton Central Differentiation Method -->
-                <div class="method-card">
-                    <div class="method-title">نيوتن المركزي للاشتقاق (Newton Central Differentiation)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>استخدم صيغة نيوتن المركزي للاشتقاق لما النقطة xₚ قريبة من منتصف قاعدة البيانات. بنشتق صيغة الاستيفاء المركزي.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>حدد النقطة المركزية xᵢ</li>
-                            <li>احسب p = (xₚ - xᵢ) / h و q = 1 - p</li>
-                            <li>كون جدول الفروقات المركزية</li>
-                            <li>استخدم القانون المركزي</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            f'(xₚ) = (1/h) × [f(xᵢ₊₁) + ((3p²-1)/6) × δ²f(xᵢ₊₁) - f(xᵢ) + ((3(1-p)²+1)/6) × δ²f(xᵢ)]<br>
-                            حيث p = (xₚ - xᵢ) / h, q = 1 - p
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: من نفس الجدول، احسب f'(6.4)</h4>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                xₚ = 6.4 قريبة من المنتصف → نستخدم Central<br>
-                                h = 2, xᵢ = 6<br>
-                                p = (6.4 - 6) / 2 = 0.2, q = 0.8<br>
-                                δ²f(xᵢ) = 3, δ²f(xᵢ₊₁) = 7<br>
-                                f'(6.4) = (1/2) × [8 + ((3×0.2²-1)/6)×7 - 3 + ((3×0.8²+1)/6)×3]<br>
-                                f'(6.4) = 0.5 × [8 - 0.28 - 3 + 0.56] = 0.5 × 5.28 = 2.64<br>
-                                <strong>النتيجة: f'(6.4) ≈ 2.64</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section 5: Numerical Integration -->
-        <div class="section">
-            <div class="section-title">5️⃣ التكامل العددي (Numerical Integration)</div>
-            
-            <div class="methods-grid">
-                <!-- Trapezoidal Rule -->
-                <div class="method-card">
-                    <div class="method-title">قاعدة شبه المنحرف (Trapezoidal Rule)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>قاعدة شبه المنحرف طريقة بسيطة لحساب التكامل. الفكرة إننا بنقسم المساحة تحت المنحنى لشبه منحرفات، وبنحسب مساحة كل شبه منحرف ونجمعهم. طريقة سهلة لكن دقتها متوسطة.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>حدد الفترة [a, b]</li>
-                            <li>احسب f(a) و f(b)</li>
-                            <li>طبق القانون: I ≈ (b-a) × [f(a) + f(b)] / 2</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            ∫<sub>a</sub><sup>b</sup> f(x) dx ≈ (b-a) × [f(a) + f(b)] / 2
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: احسب ∫<sub>0</sub><sup>2</sup> x dx</h4>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                a = 0, b = 2<br>
-                                f(0) = 0, f(2) = 2<br>
-                                I ≈ (2-0) × [0 + 2] / 2 = 2 × 1 = 2<br>
-                                القيمة الدقيقة: x²/2 من 0 لـ 2 = 2<br>
-                                <strong>النتيجة صحيحة!</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Composite Trapezoidal -->
-                <div class="method-card">
-                    <div class="method-title">قاعدة شبه المنحرف المركبة (Composite Trapezoidal)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>قاعدة شبه المنحرف المركبة تحسين للقاعدة العادية. بنقسم الفترة لعدة أجزاء (n جزء) وبنطبق قاعدة شبه المنحرف على كل جزء. كل ما زاد عدد الأجزاء، كل ما زادت الدقة.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>حدد الفترة [a, b] وعدد الأجزاء n</li>
-                            <li>احسب h = (b - a) / n</li>
-                            <li>احسب النقاط: x₀ = a, x₁ = a+h, ..., xₙ = b</li>
-                            <li>احسب f(x₀), f(x₁), ..., f(xₙ)</li>
-                            <li>طبق القانون المركب</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            ∫<sub>a</sub><sup>b</sup> f(x) dx ≈ (h/2) × [f(x₀) + 2Σ<sub>i=1</sub><sup>n-1</sup>f(xᵢ) + f(xₙ)]
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: احسب ∫<sub>0</sub><sup>2</sup> x² dx باستخدام n = 4</h4>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                h = (2-0)/4 = 0.5<br>
-                                x₀=0, x₁=0.5, x₂=1, x₃=1.5, x₄=2<br>
-                                f(0)=0, f(0.5)=0.25, f(1)=1, f(1.5)=2.25, f(2)=4<br>
-                                I ≈ (0.5/2) × [0 + 2(0.25+1+2.25) + 4]<br>
-                                I ≈ 0.25 × [0 + 7 + 4] = 2.75<br>
-                                القيمة الدقيقة: 8/3 ≈ 2.667<br>
-                                <strong>دقة جيدة!</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Simpson's Rule -->
-                <div class="method-card">
-                    <div class="method-title">قاعدة سيمبسون (Simpson's Rule)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>قاعدة سيمبسون طريقة دقيقة جداً للتكامل. بدل ما نستخدم خطوط مستقيمة (شبه منحرفات)، بنستخدم قطع مكافئة (parabolas) عشان نقرب المنحنى. دقتها أعلى من شبه المنحرف، خاصة لو الدالة منحنية.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>حدد الفترة [a, b] (n لازم يكون زوجي)</li>
-                            <li>احسب h = (b - a) / n</li>
-                            <li>احسب النقاط: x₀ = a, x₁ = a+h, ..., xₙ = b</li>
-                            <li>احسب f(x₀), f(x₁), ..., f(xₙ)</li>
-                            <li>طبق قانون سيمبسون</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            ∫<sub>a</sub><sup>b</sup> f(x) dx ≈ (h/3) × [f(x₀) + 4Σ<sub>i odd</sub>f(xᵢ) + 2Σ<sub>i even</sub>f(xᵢ) + f(xₙ)]
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: احسب ∫<sub>0</sub><sup>2</sup> x² dx باستخدام n = 4</h4>
-                            <div class="example-step">
-                                <strong>الحل:</strong><br>
-                                h = (2-0)/4 = 0.5<br>
-                                x₀=0, x₁=0.5, x₂=1, x₃=1.5, x₄=2<br>
-                                f(0)=0, f(0.5)=0.25, f(1)=1, f(1.5)=2.25, f(2)=4<br>
-                                I ≈ (0.5/3) × [0 + 4(0.25+2.25) + 2(1) + 4]<br>
-                                I ≈ (0.5/3) × [0 + 10 + 2 + 4] = 0.167 × 16 = 2.667<br>
-                                القيمة الدقيقة: 8/3 = 2.667<br>
-                                <strong>نتيجة دقيقة جداً!</strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Section 6: ODE Methods -->
-        <div class="section">
-            <div class="section-title">6️⃣ طرق حل المعادلات التفاضلية (ODE Methods)</div>
-            
-            <div class="methods-grid">
-                <!-- Euler Method -->
-                <div class="method-card">
-                    <div class="method-title">طريقة أويلر (Euler Method)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>طريقة أويلر أبسط طريقة لحل المعادلات التفاضلية العادية. الفكرة إننا بنستخدم المشتقة (الميل) عند نقطة معينة عشان نتوقع القيمة التالية. طريقة بسيطة لكن دقتها منخفضة، خاصة لو الخطوة كبيرة.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>اكتب المعادلة: y' = f(x, y) مع الشرط الابتدائي y(x₀) = y₀</li>
-                            <li>حدد حجم الخطوة h</li>
-                            <li>احسب x₁ = x₀ + h</li>
-                            <li>احسب y₁ = y₀ + h × f(x₀, y₀)</li>
-                            <li>كرر: x<sub>n+1</sub> = xₙ + h</li>
-                            <li>y<sub>n+1</sub> = yₙ + h × f(xₙ, yₙ)</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            y<sub>n+1</sub> = yₙ + h × f(xₙ, yₙ)<br>
-                            x<sub>n+1</sub> = xₙ + h
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: حل y' = x + y، y(0) = 1، h = 0.1</h4>
-                            <div class="example-step">
-                                <strong>التكرار الأول:</strong><br>
-                                x₀ = 0, y₀ = 1<br>
-                                f(0, 1) = 0 + 1 = 1<br>
-                                x₁ = 0 + 0.1 = 0.1<br>
-                                y₁ = 1 + 0.1 × 1 = 1.1<br><br>
-                                <strong>التكرار الثاني:</strong><br>
-                                f(0.1, 1.1) = 0.1 + 1.1 = 1.2<br>
-                                x₂ = 0.1 + 0.1 = 0.2<br>
-                                y₂ = 1.1 + 0.1 × 1.2 = 1.22<br><br>
-                                <strong>التكرار الثالث:</strong><br>
-                                f(0.2, 1.22) = 0.2 + 1.22 = 1.42<br>
-                                x₃ = 0.2 + 0.1 = 0.3<br>
-                                y₃ = 1.22 + 0.1 × 1.42 = 1.362
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Modified Euler (Heun) -->
-                <div class="method-card">
-                    <div class="method-title">طريقة أويلر المعدلة (Heun Method)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>طريقة أويلر المعدلة (هيون) تحسين لطريقة أويلر. بدل ما نستخدم الميل عند نقطة واحدة، بنستخدم متوسط الميل عند نقطتين: الميل عند البداية والميل المتوقع عند النهاية. ده بيخلي الدقة أعلى.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>احسب التنبؤ الأولي: y* = yₙ + h × f(xₙ, yₙ)</li>
-                            <li>احسب الميل عند النهاية: f(xₙ₊₁, y*)</li>
-                            <li>احسب متوسط الميل: [f(xₙ, yₙ) + f(xₙ₊₁, y*)] / 2</li>
-                            <li>احسب القيمة النهائية: yₙ₊₁ = yₙ + h × متوسط الميل</li>
-                            <li>كرر للخطوة التالية</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            y* = yₙ + h × f(xₙ, yₙ)<br>
-                            yₙ₊₁ = yₙ + (h/2) × [f(xₙ, yₙ) + f(xₙ₊₁, y*)]
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: حل y' = x + y، y(0) = 1، h = 0.1</h4>
-                            <div class="example-step">
-                                <strong>التكرار الأول:</strong><br>
-                                x₀ = 0, y₀ = 1<br>
-                                f(0, 1) = 1<br>
-                                y* = 1 + 0.1 × 1 = 1.1<br>
-                                f(0.1, 1.1) = 1.2<br>
-                                y₁ = 1 + (0.1/2) × [1 + 1.2] = 1 + 0.11 = 1.11<br><br>
-                                <strong>التكرار الثاني:</strong><br>
-                                f(0.1, 1.11) = 1.21<br>
-                                y* = 1.11 + 0.1 × 1.21 = 1.231<br>
-                                f(0.2, 1.231) = 1.431<br>
-                                y₂ = 1.11 + 0.05 × [1.21 + 1.431] = 1.242
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Runge-Kutta RK4 -->
-                <div class="method-card">
-                    <div class="method-title">طريقة رونج-كوتا من الرتبة الرابعة (Runge-Kutta RK4)</div>
-                    
-                    <div class="method-section">
-                        <h3>📖 الشرح:</h3>
-                        <p>طريقة رونج-كوتا من الرتبة الرابعة (RK4) من أفضل الطرق لحل المعادلات التفاضلية. بتستخدم 4 تقديرات للميل في كل خطوة وبتأخذ متوسطهم الموزون. دقتها عالية جداً وبتستخدم في معظم التطبيقات العملية.</p>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📝 خطوات الحل:</h3>
-                        <ul>
-                            <li>احسب k₁ = h × f(xₙ, yₙ)</li>
-                            <li>احسب k₂ = h × f(xₙ + h/2, yₙ + k₁/2)</li>
-                            <li>احسب k₃ = h × f(xₙ + h/2, yₙ + k₂/2)</li>
-                            <li>احسب k₄ = h × f(xₙ + h, yₙ + k₃)</li>
-                            <li>احسب yₙ₊₁ = yₙ + (k₁ + 2k₂ + 2k₃ + k₄) / 6</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>📐 القانون:</h3>
-                        <div class="formula-card">
-                            k₁ = h × f(xₙ, yₙ)<br>
-                            k₂ = h × f(xₙ + h/2, yₙ + k₁/2)<br>
-                            k₃ = h × f(xₙ + h/2, yₙ + k₂/2)<br>
-                            k₄ = h × f(xₙ + h, yₙ + k₃)<br>
-                            yₙ₊₁ = yₙ + (k₁ + 2k₂ + 2k₃ + k₄) / 6
-                        </div>
-                    </div>
-
-                    <div class="method-section">
-                        <h3>🔢 مثال:</h3>
-                        <div class="example-box">
-                            <h4>مثال: حل y' = x + y، y(0) = 1، h = 0.1</h4>
-                            <div class="example-step">
-                                <strong>التكرار الأول:</strong><br>
-                                x₀ = 0, y₀ = 1<br>
-                                k₁ = 0.1 × (0 + 1) = 0.1<br>
-                                k₂ = 0.1 × (0.05 + 1.05) = 0.11<br>
-                                k₃ = 0.1 × (0.05 + 1.055) = 0.1105<br>
-                                k₄ = 0.1 × (0.1 + 1.1105) = 0.12105<br>
-                                y₁ = 1 + (0.1 + 2×0.11 + 2×0.1105 + 0.12105) / 6<br>
-                                y₁ = 1 + 0.11034 = 1.11034<br><br>
-                                (دقة عالية جداً مقارنة بأويلر!)
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 50px; padding: 20px; color: #a0a0a0;">
-            <p>📚 ملخص شامل لجميع مواضيع التحليل العددي</p>
-            <p style="margin-top: 10px;">تم إعداد هذا الملخص ليكون مرجعاً سريعاً وواضحاً</p>
-        </div>
-    </div>
-</body>
-</html>
